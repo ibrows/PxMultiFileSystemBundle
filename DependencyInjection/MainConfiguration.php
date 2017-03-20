@@ -34,7 +34,7 @@ class MainConfiguration implements ConfigurationInterface
         $rootNode = $treeBuilder
             ->root('px_multi_file_system')
             ->children()
-                ->scalarNode('default_adapter')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('default_adapter')->defaultValue('')->end()
             ->end();
 
         $this->addAdaptersSection($rootNode, $this->factories);

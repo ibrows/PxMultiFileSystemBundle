@@ -24,13 +24,6 @@ class PxMultiFileSystemExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        //$configuration = new Configuration();
-        //$config = $this->processConfiguration($configuration, $configs);
-//
-        //$loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        //$loader->load('services.xml');
-
-
         $processor = new Processor();
         $config = $processor->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
@@ -43,10 +36,14 @@ class PxMultiFileSystemExtension extends Extension
 
         $map = array();
         foreach ($config['adapters'] as $adapterName => $adapter) {
+            reset($adapter);
+            $key = key($adapter);
+            if (true !== $adapter[$key]['active']) {
+                continue;
+            }
+
             foreach ($config['contexts'] as $filesystemName => $filesystem) {
                 if (isset($filesystem['directory'])) {
-                    reset($adapter);
-                    $key = key($adapter);
                     $adapter[$key]['directory'] .= $filesystem['directory'];
                 }
                 $adapters[$adapterName] = $this->createAdapter($adapterName, $adapter, $container, $this->factories);
