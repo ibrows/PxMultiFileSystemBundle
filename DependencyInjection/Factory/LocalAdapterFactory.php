@@ -38,9 +38,21 @@ class LocalAdapterFactory implements AdapterFactoryInterface
     {
         $node
             ->children()
-                ->booleanNode('active')->defaultFalse()->end()
+                ->booleanNode('active')
+                    ->defaultFalse()
+                    ->beforeNormalization()
+                        ->ifString()
+                            ->then(function($v) { return in_array($v, array('1', 'true', 'on')); })
+                    ->end()
+                ->end()
                 ->scalarNode('directory')->defaultValue('')->end()
-                ->booleanNode('create')->defaultFalse()->end()
+                ->booleanNode('create')
+                    ->defaultFalse()
+                    ->beforeNormalization()
+                        ->ifString()
+                            ->then(function($v) { return in_array($v, array('1', 'true', 'on')); })
+                    ->end()
+                ->end()
             ->end()
         ;
     }
