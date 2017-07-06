@@ -35,14 +35,13 @@ class PxMultiFileSystemExtension extends Extension
         $adapters = array();
 
         $map = array();
-        $baseDirectory = $adapter[$key]['directory'];
         foreach ($config['adapters'] as $adapterName => $adapter) {
             reset($adapter);
             $key = key($adapter);
             if (true !== $adapter[$key]['active']) {
                 continue;
             }
-
+            $baseDirectory = $adapter[$key]['directory'];
             foreach ($config['contexts'] as $filesystemName => $filesystem) {
                 if (isset($filesystem['directory'])) {
                     $adapter[$key]['directory'] = $baseDirectory.$filesystem['directory'];
