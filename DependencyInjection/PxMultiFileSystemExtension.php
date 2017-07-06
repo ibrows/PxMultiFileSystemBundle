@@ -35,6 +35,7 @@ class PxMultiFileSystemExtension extends Extension
         $adapters = array();
 
         $map = array();
+        $baseDirectory = $adapter[$key]['directory'];
         foreach ($config['adapters'] as $adapterName => $adapter) {
             reset($adapter);
             $key = key($adapter);
@@ -44,11 +45,11 @@ class PxMultiFileSystemExtension extends Extension
 
             foreach ($config['contexts'] as $filesystemName => $filesystem) {
                 if (isset($filesystem['directory'])) {
-                    $adapter[$key]['directory'] .= $filesystem['directory'];
+                    $adapter[$key]['directory'] = $baseDirectory.$filesystem['directory'];
                 }
-                $adapters[$adapterName] = $this->createAdapter($adapterName, $adapter, $container, $this->factories);
                 $name = sprintf('%s_%s', $adapterName, $filesystemName);
-                $map[$name] = $this->createFilesystem($name, $filesystem, $container, $adapters[$adapterName]);
+                $adapters[$name] = $this->createAdapter($name, $adapter, $container, $this->factories);
+                $map[$name] = $this->createFilesystem($name, $filesystem, $container, $adapters[$name]);
             }
         }
 
