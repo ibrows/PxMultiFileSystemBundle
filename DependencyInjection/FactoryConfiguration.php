@@ -17,19 +17,18 @@ class FactoryConfiguration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder('px_multi_file_system');
+        $rootNode    = $treeBuilder->getRootNode();
 
-        $treeBuilder
-            ->root('px_multi_file_system')
-                ->ignoreExtraKeys()
-                ->fixXmlConfig('factory', 'factories')
-                ->children()
-                    ->arrayNode('factories')
-                        ->prototype('scalar')->end()
-                    ->end()
+        $rootNode
+            ->ignoreExtraKeys()
+            ->fixXmlConfig('factory', 'factories')
+            ->children()
+                ->arrayNode('factories')
+                    ->prototype('scalar')->end()
                 ->end()
             ->end()
-        ;
+        ->end();
 
         return $treeBuilder;
     }

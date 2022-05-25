@@ -30,9 +30,9 @@ class MainConfiguration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder
-            ->root('px_multi_file_system')
+        $treeBuilder = new TreeBuilder('px_multi_file_system');
+        $rootNode    = $treeBuilder->getRootNode();
+        $rootNode
             ->children()
                 ->scalarNode('default_adapter')->defaultValue('')->end()
             ->end();
