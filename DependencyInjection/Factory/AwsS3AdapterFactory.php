@@ -6,7 +6,7 @@ use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 
 class AwsS3AdapterFactory implements AdapterFactoryInterface
@@ -23,7 +23,7 @@ class AwsS3AdapterFactory implements AdapterFactoryInterface
             'acl'       => $config['acl'],
         );
         $container
-            ->setDefinition($id, new DefinitionDecorator('px_multi_file_system.adapter.aws_s3'))
+            ->setDefinition($id, new ChildDefinition('px_multi_file_system.adapter.aws_s3'))
             ->addArgument(new Reference($s3ClientId))
             ->addArgument($config['s3_config']['bucket_name'])
             ->addArgument($options)
@@ -34,7 +34,7 @@ class AwsS3AdapterFactory implements AdapterFactoryInterface
             'credentials' => $config['s3_config']['credentials'],
         ];
         $container
-            ->setDefinition($s3ClientId, new DefinitionDecorator('px_multi_file_system.aws_s3.client'))
+            ->setDefinition($s3ClientId, new ChildDefinition('px_multi_file_system.aws_s3.client'))
             ->addArgument($s3Config)
         ;
     }

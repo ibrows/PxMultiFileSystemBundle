@@ -5,7 +5,7 @@ namespace Px\MultiFileSystemBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -92,7 +92,7 @@ class PxMultiFileSystemExtension extends Extension
         $id = sprintf('px_multi_file_system.%s_filesystem', $name);
 
         $container
-            ->setDefinition($id, new DefinitionDecorator('px_multi_file_system.filesystem'))
+            ->setDefinition($id, new ChildDefinition('px_multi_file_system.filesystem'))
             ->replaceArgument(0, new Reference($adapter))
         ;
 
