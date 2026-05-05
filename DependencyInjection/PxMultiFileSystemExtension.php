@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -22,7 +23,7 @@ class PxMultiFileSystemExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $processor = new Processor();
         $config = $processor->processConfiguration($this->getConfiguration($configs, $container), $configs);
@@ -56,7 +57,7 @@ class PxMultiFileSystemExtension extends Extension
             ->replaceArgument(0, $map);
     }
 
-    public function getConfiguration(array $configs, ContainerBuilder $container)
+    public function getConfiguration(array $configs, ContainerBuilder $container): ?ConfigurationInterface
     {
         $processor = new Processor();
 
