@@ -118,7 +118,7 @@ class PxMultiFileSystemExtension extends Extension
         // load bundled adapter factories
         $tempContainer = new ContainerBuilder();
         $parameterBag  = $container->getParameterBag();
-        $loader        = new XmlFileLoader($tempContainer, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader        = new PhpFileLoader($tempContainer, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('adapter_factories.php');
 
