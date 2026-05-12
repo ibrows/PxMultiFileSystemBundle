@@ -7,7 +7,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -30,8 +30,8 @@ class PxMultiFileSystemExtension extends Extension
 
         $container->setParameter('px_multi_file_system.default_adapter', $config['default_adapter']);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('filesystem.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('filesystem.php');
 
         $adapters = array();
 
@@ -120,7 +120,7 @@ class PxMultiFileSystemExtension extends Extension
         $parameterBag  = $container->getParameterBag();
         $loader        = new XmlFileLoader($tempContainer, new FileLocator(__DIR__.'/../Resources/config'));
 
-        $loader->load('adapter_factories.xml');
+        $loader->load('adapter_factories.php');
 
         // load user-created adapter factories
         foreach ($config['factories'] as $factory) {
